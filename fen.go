@@ -58,15 +58,29 @@ func (group *RouterGroup) GET(pattern string, handler HandlerFunc) {
 func (group *RouterGroup) POST(pattern string, handler HandlerFunc) {
 	group.addRoute("POST", pattern, handler)
 }
+func (group *RouterGroup) PUT(pattern string, handler HandlerFunc) {
+	group.addRoute("PUT", pattern, handler)
+}
+func (group *RouterGroup) DELETE(pattern string, handler HandlerFunc) {
+	group.addRoute("DELETE", pattern, handler)
+}
+
+func (group *RouterGroup) OPTIONS(pattern string, handler HandlerFunc) {
+	group.addRoute("OPTIONS", pattern, handler)
+}
+func (group *RouterGroup) HEAD(pattern string, handler HandlerFunc) {
+	group.addRoute("HEAD", pattern, handler)
+}
 
 func (group *RouterGroup) Use(middlewares ...HandlerFunc) {
 	group.middlewares = append(group.middlewares, middlewares...)
 }
-func (engine *Engine) Run(addr string) (err error) {
-	address := fmt.Sprintf(InfoColor, addr)
+func (engine *Engine) Run(addr ...string) (err error) {
+	addressStr := resolveAddress(addr)
+	address := fmt.Sprintf(InfoColor, addressStr)
 	title := fmt.Sprintf(NoticeColor, "Fen")
 	log.Printf("%s Listening and serving HTTP on %s", title, address)
-	return http.ListenAndServe(addr, engine)
+	return http.ListenAndServe(addressStr, engine)
 }
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	var middlewares []HandlerFunc
