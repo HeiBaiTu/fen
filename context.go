@@ -36,6 +36,15 @@ func (c *Context) Next() {
 		c.handlers[c.index](c)
 	}
 }
+func (c *Context) Abort() {
+	c.index = len(c.handlers)
+}
+
+func (c *Context) AbortWithStatus(code int) {
+	c.Status(code)
+	c.Abort()
+}
+
 func (c *Context) Fail(code int, err string) {
 	c.index = len(c.handlers)
 	c.JSON(code, H{"message": err})
