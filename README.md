@@ -20,5 +20,6 @@ func main() {
 ```
 
 ```bash
-2024/01/03 16:01:26 Fen Listening and serving HTTP on :8080
+2024/01/03 16:24:05 PORT is undefined. Using port :8080 by default
+2024/01/03 16:24:05 Fen Listening and serving HTTP on :8080
 ```
